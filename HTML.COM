@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Matemática em Ação | Ideias que inspiram, aprendizagens que transformam</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 30%, #0a0f2a, #030617);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      color: #f0f3ff;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Gradiente que segue o mouse - tons de amarelo */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(253,230,138,0.12), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transition: background 0.1s;
+    }
+
+    /* Partículas de fundo animadas */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(circle at 20% 40%, rgba(253,230,138,0.08) 2px, transparent 2px),
+                        radial-gradient(circle at 80% 70%, rgba(249,115,22,0.06) 1px, transparent 1px);
+      background-size: 40px 40px, 30px 30px;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatParticles 60s linear infinite;
+    }
+
+    @keyframes floatParticles {
+      0% { background-position: 0 0, 0 0; }
+      100% { background-position: 100px 100px, -80px 80px; }
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .header {
+      background: rgba(8, 17, 31, 0.7);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(253,230,138,0.4);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 16px 0;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.4rem;
+      background: linear-gradient(135deg, #fde68a, #f97316, #67e8f9);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: #cbd5f0;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 20px;
+      border-radius: 40px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-size: 0.9rem;
+      position: relative;
+    }
+
+    .nav a::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: #fde68a;
+      transition: 0.2s;
+      transform: translateX(-50%);
+    }
+
+    .nav a:hover::before {
+      width: 70%;
+    }
+
+    .nav a:hover {
+      color: #fde68a;
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      padding: 100px 0 60px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #fde68a, #f97316, #67e8f9);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 28px;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .hero p {
+      max-width: 900px;
+      margin: 0 auto 20px;
+      color: #d1d9ff;
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    /* Espaço para os emblemas */
+    .emblems-section {
+      background: rgba(0,0,0,0.2);
+      border-radius: 48px;
+      padding: 20px 32px;
+      margin: 40px auto 0;
+      max-width: 800px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(253,230,138,0.3);
+    }
+
+    .emblem-placeholder {
+      background: rgba(253,230,138,0.1);
+      border: 2px dashed #fde68a;
+      border-radius: 32px;
+      padding: 20px 40px;
+      min-width: 220px;
+      text-align: center;
+      transition: 0.2s;
+    }
+
+    .emblem-placeholder:hover {
+      background: rgba(253,230,138,0.2);
+      transform: scale(1.02);
+    }
+
+    .emblem-placeholder i {
+      font-size: 3rem;
+      color: #fde68a;
+      margin-bottom: 12px;
+    }
+
+    .emblem-placeholder p {
+      margin: 0;
+      font-weight: 600;
+      color: #fde68a;
+    }
+
+    /* Puzzle card */
+    .puzzle-card {
+      background: rgba(253,230,138,0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(253,230,138,0.5);
+      border-radius: 48px;
+      padding: 28px;
+      margin: 40px auto 0;
+      max-width: 650px;
+      text-align: center;
+    }
+
+    .puzzle-card:hover {
+      background: rgba(253,230,138,0.15);
+      border-color: #f97316;
+    }
+
+    .puzzle-card h3 {
+      color: #fde68a;
+      margin-bottom: 16px;
+      font-size: 1.5rem;
+    }
+
+    .puzzle-question {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin: 16px 0;
+      background: linear-gradient(135deg, #fff, #fde68a);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .puzzle-answer {
+      background: rgba(0,0,0,0.5);
+      border-radius: 40px;
+      padding: 12px;
+      margin-top: 16px;
+      display: none;
+      border: 1px solid #fde68a;
+    }
+
+    .puzzle-btn {
+      background: linear-gradient(95deg, #fde68a, #f97316);
+      border: none;
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 12px;
+      color: #0a0f2a;
+      transition: 0.2s;
+    }
+
+    .puzzle-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(253,230,138,0.4);
+    }
+
+    /* Feature cards */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
+      margin: 60px 0;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(253,230,138,0.3);
+      border-radius: 32px;
+      padding: 32px 20px;
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-12px);
+      background: rgba(253,230,138,0.1);
+      border-color: #f97316;
+    }
+
+    .feature-card i {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      color: #fde68a;
+    }
+
+    .feature-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: #fde68a;
+    }
+
+    /* Tabs */
+    .tabs-container {
+      margin: 50px 0;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeSlideUp 0.5s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    .card-panel {
+      background: rgba(15, 25, 45, 0.7);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(253,230,138,0.3);
+      border-radius: 48px;
+      padding: 40px;
+    }
+
+    .card-panel h2 {
+      font-size: 2.2rem;
+      margin-bottom: 32px;
+      background: linear-gradient(135deg, #fde68a, #f97316, #67e8f9);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .highlight-box {
+      background: rgba(253,230,138,0.05);
+      border-left: 4px solid #f97316;
+      padding: 24px;
+      border-radius: 28px;
+      transition: 0.2s;
+    }
+
+    .highlight-box:hover {
+      background: rgba(253,230,138,0.1);
+      transform: translateX(6px);
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 20px;
+      background: rgba(255,255,255,0.03);
+      padding: 20px;
+      border-radius: 28px;
+    }
+
+    .step-number {
+      background: linear-gradient(135deg, #fde68a, #f97316);
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 60px;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: #0a0f2a;
+    }
+
+    /* Quiz */
+    .quiz-card {
+      background: rgba(0,0,0,0.3);
+      border-radius: 40px;
+      padding: 32px;
+    }
+
+    .question {
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .question p {
+      font-weight: 700;
+      margin-bottom: 16px;
+      font-size: 1.1rem;
+    }
+
+    .option {
+      display: block;
+      margin: 10px 0;
+      padding: 14px 20px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 1px solid transparent;
+    }
+
+    .option:hover {
+      background: rgba(253,230,138,0.1);
+      transform: translateX(8px);
+      border-color: #fde68a;
+    }
+
+    .option.correct-feedback {
+      background: rgba(72, 187, 120, 0.2);
+      border-left: 4px solid #48bb78;
+    }
+
+    .option.wrong-feedback {
+      background: rgba(245, 101, 101, 0.2);
+      border-left: 4px solid #f56565;
+    }
+
+    .btn-primary, .btn-secondary {
+      border: none;
+      padding: 12px 32px;
+      border-radius: 60px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(95deg, #fde68a, #f97316);
+      color: #0a0f2a;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    .feedback-area {
+      margin-top: 28px;
+      background: rgba(253,230,138,0.1);
+      border-radius: 32px;
+      padding: 24px;
+      display: none;
+    }
+
+    /* Carrossel de curiosidades */
+    .curiosity-carousel {
+      background: linear-gradient(135deg, rgba(253,230,138,0.12), rgba(249,115,22,0.12));
+      border-radius: 48px;
+      padding: 32px;
+      margin-top: 40px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .carousel-btn {
+      background: rgba(253,230,138,0.3);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: 0.2s;
+      color: #fde68a;
+    }
+
+    .carousel-btn:hover {
+      background: #fde68a;
+      color: #0a0f2a;
+      transform: scale(1.05);
+    }
+
+    /* Jogo Snake */
+    .game-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 36px;
+      justify-content: center;
+      margin: 30px 0;
+    }
+
+    .game-canvas {
+      background: #0a0f2a;
+      border-radius: 24px;
+      box-shadow: 0 0 25px rgba(253,230,138,0.4);
+    }
+
+    .game-info {
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(12px);
+      border-radius: 36px;
+      padding: 28px;
+      min-width: 240px;
+      text-align: center;
+      border: 1px solid rgba(253,230,138,0.3);
+    }
+
+    .score, .phase {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #fde68a;
+      background: rgba(0,0,0,0.4);
+      padding: 6px 20px;
+      border-radius: 60px;
+      display: inline-block;
+    }
+
+    .game-buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .game-btn {
+      background: rgba(253,230,138,0.2);
+      border: 1px solid #fde68a;
+      padding: 10px 24px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+    }
+
+    .game-btn:hover {
+      background: #fde68a;
+      color: #0a0f2a;
+      transform: translateY(-2px);
+    }
+
+    .math-explanation {
+      background: rgba(253,230,138,0.1);
+      border-radius: 32px;
+      padding: 28px;
+      margin-top: 32px;
+      border-left: 4px solid #f97316;
+    }
+
+    .fun-fact {
+      background: rgba(253,230,138,0.05);
+      border-radius: 28px;
+      padding: 20px;
+      margin-top: 24px;
+      text-align: center;
+      border: 1px solid rgba(253,230,138,0.3);
+    }
+
+    footer {
+      margin-top: 80px;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(12px);
+      padding: 40px 0 32px;
+      text-align: center;
+      border-top: 1px solid rgba(253,230,138,0.2);
+    }
+
+    .footer-quote {
+      max-width: 700px;
+      margin: 12px auto 0;
+      font-size: 0.95rem;
+      color: #fde68a;
+      font-style: italic;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(253,230,138,0.4);
+      backdrop-filter: blur(8px);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 1px solid #fde68a;
+      z-index: 99;
+    }
+
+    .back-to-top:hover {
+      background: #fde68a;
+      transform: translateY(-3px);
+    }
+
+    /* Player de música */
+    .music-player {
+      position: fixed;
+      bottom: 100px;
+      left: 20px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      border-radius: 60px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 98;
+      border: 1px solid rgba(253,230,138,0.5);
+      transition: 0.2s;
+      cursor: pointer;
+    }
+    .music-player:hover {
+      background: rgba(0,0,0,0.7);
+      transform: scale(1.02);
+    }
+    .music-player i {
+      font-size: 1.2rem;
+      color: #fde68a;
+    }
+    .music-player span {
+      font-size: 0.8rem;
+      color: #fff;
+    }
+
+    @media (max-width: 780px) {
+      .container { padding: 0 20px; }
+      .card-panel { padding: 28px; }
+      .emblems-section { flex-direction: column; align-items: center; gap: 20px; }
+      .music-player { bottom: 80px; left: 10px; padding: 6px 12px; }
+      .music-player span { display: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<div class="header">
+  <div class="container header-content">
+    <div class="logo">📐 Matemática em Ação</div>
+    <div class="nav">
+      <a data-tab="inicio">Início</a>
+      <a data-tab="importancia">Importância da Matemática</a>
+      <a data-tab="adm">Matemática na Administração</a>
+      <a data-tab="metodologias">Metodologias Ativas</a>
+      <a data-tab="lemov">Técnicas Lemov</a>
+      <a data-tab="quiz">Quiz</a>
+      <a data-tab="snake">🐍 Jogo Snake</a>
+      <a data-tab="creditos">Créditos</a>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="container">
+    <h1>Matemática em ação:<br>ideias que inspiram, aprendizagens que transformam</h1>
+    <p>Projeto interdisciplinar entre o <strong>Colégio Estadual Antônio Tortato (Paranacity/PR)</strong> e o <strong>Colégio Estadual São Vicente de Paula (Nova Esperança/PR)</strong>, integrando o curso de Formação de Docentes e Administração.</p>
+    <p>Um site interativo que une metodologias ativas, técnicas de Doug Lemov e matemática para uma aprendizagem significativa, participativa e inovadora.</p>
+
+    <div class="emblems-section">
+      <div class="emblem-placeholder">
+        <i class="fas fa-school"></i>
+        <p>Emblema do Colégio Estadual Antônio Tortato</p>
+      </div>
+      <div class="emblem-placeholder">
+        <i class="fas fa-church"></i>
+        <p>Emblema do Colégio Estadual São Vicente de Paula</p>
+      </div>
+    </div>
+
+    <div class="puzzle-card">
+      <h3><i class="fas fa-brain"></i> Desafio Matemático do Dia</h3>
+      <div class="puzzle-question" id="puzzleQuestion">Carregando...</div>
+      <button class="puzzle-btn" id="revealAnswerBtn">Revelar Resposta</button>
+      <div class="puzzle-answer" id="puzzleAnswer"></div>
+      <button class="puzzle-btn" id="newPuzzleBtn" style="background: rgba(255,255,255,0.2); color: white; margin-left: 12px;">Novo Desafio</button>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card"><i class="fas fa-brain"></i><h3>Conteúdo acessível</h3><p>Organizado por temas e níveis de complexidade.</p></div>
+      <div class="feature-card"><i class="fas fa-chalkboard-user"></i><h3>Técnicas Lemov</h3><p>Engajamento, participação e retenção.</p></div>
+      <div class="feature-card"><i class="fas fa-laptop-code"></i><h3>Formação integrada</h3><p>Docência e administração.</p></div>
+      <div class="feature-card"><i class="fas fa-gamepad"></i><h3>Jogo + Quiz</h3><p>Aprenda matemática se divertindo.</p></div>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+  <div class="tabs-container">
+    <!-- Aba Início (mesmo conteúdo) -->
+    <div id="tab-inicio" class="tab-content active">
+      <div class="card-panel">
+        <h2>📌 Alinhamento ao tema e metodologia</h2>
+        <p>Nós, estudantes dos Colégios Estaduais Antônio Tortato e São Vicente de Paula, desenvolvemos este projeto a partir de uma necessidade real: as dificuldades na aprendizagem da Matemática. Diante disso, criamos uma solução concreta, criativa e viável, alinhada ao tema “Ideias que inspiram, soluções que transformam”, relacionando a Matemática com a ação pedagógica.</p>
+        <p>Elaboramos um site informativo e interativo, integrando metodologias ativas, técnicas de Doug Lemov e tecnologias digitais, com o objetivo de tornar a aprendizagem mais acessível, dinâmica e significativa. Todo o processo foi desenvolvido por nós, evidenciando nosso protagonismo desde a concepção da ideia até a construção do protótipo.</p>
+        <p>Durante o projeto, também ampliamos nossa compreensão sobre o processo de ensino e aprendizagem, articulando nossos cursos técnicos — Formação de Docentes e Administração — com planejamento, mediação e uso de tecnologias, buscando ainda compartilhar e disseminar esse conhecimento com a comunidade.</p>
+        <p>O projeto apresenta relevância social, pois disponibiliza um recurso gratuito que pode apoiar estudantes e professores. Sua viabilidade é total, com custo zero, sendo facilmente replicável em outras escolas e contextos educacionais.</p>
+        <p><em>Educar é transformar — e demonstramos que nós, estudantes, também somos capazes de criar soluções que transformam a aprendizagem.</em></p>
+        <h3 style="margin: 32px 0 16px;">📚 Metodologia detalhada e estruturada</h3>
+        <div class="timeline">
+          <div class="timeline-item"><div class="step-number">1</div><div><strong>Diagnóstico e planejamento:</strong> Levantamento das dificuldades em Matemática, definição das equipes e organização do cronograma.</div></div>
+          <div class="timeline-item"><div class="step-number">2</div><div><strong>Estudo das técnicas de Lemov:</strong> Seleção de estratégias como No Opt Out, Cold Call, Turn and Talk e Exit Ticket.</div></div>
+          <div class="timeline-item"><div class="step-number">3</div><div><strong>Produção pedagógica:</strong> Elaboração dos conteúdos matemáticos, desafios, exemplos e materiais explicativos.</div></div>
+          <div class="timeline-item"><div class="step-number">4</div><div><strong>Desenvolvimento do site:</strong> Criação do layout, organização das páginas, inserção de imagens, quiz e identidade visual.</div></div>
+          <div class="timeline-item"><div class="step-number">5</div><div><strong>Testes e aplicação piloto:</strong> Verificação da funcionalidade, navegabilidade e compreensão dos conteúdos.</div></div>
+          <div class="timeline-item"><div class="step-number">6</div><div><strong>Socialização:</strong> Apresentação final com protagonismo estudantil e demonstração do protótipo funcional.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aba Importância da Matemática (completa) -->
+    <div id="tab-importancia" class="tab-content">
+      <div class="card-panel">
+        <h2>🧠 A Matemática como pilar da formação humana e social</h2>
+        <p>A Matemática vai muito além dos números e das operações. Ela é uma linguagem universal que nos ajuda a compreender o mundo, organizar o pensamento e tomar decisões conscientes. Nesta seção, exploramos como a Matemática se manifesta em diferentes dimensões da vida e do conhecimento.</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; margin: 30px 0;">
+          <div class="highlight-box"><h3>📆 Matemática no cotidiano</h3><p>Desde calcular o troco até planejar o orçamento doméstico, passando por entender descontos, juros de financiamentos, comparar preços e controlar o tempo de preparo de receitas. A matemática nos capacita a avaliar riscos e tomar decisões financeiras mais conscientes, sendo essencial para a autonomia e cidadania.</p></div>
+          <div class="highlight-box"><h3>🏫 Matemática na educação</h3><p>Desenvolve o raciocínio lógico, a argumentação e a resolução de problemas. Ensina a pensar de forma estruturada, analisar situações complexas e validar hipóteses. É fundamental para a formação do pensamento científico e para o aprendizado em áreas como Física, Química, Engenharias e Tecnologia.</p></div>
+          <div class="highlight-box"><h3>🎵 Matemática na música</h3><p>Ritmos, compassos, frações, escalas, progressões harmônicas – a música é organizada por relações matemáticas. A sequência de Fibonacci aparece em composições, e a física das ondas sonoras determina as frequências das notas.</p></div>
+          <div class="highlight-box"><h3>🎨 Matemática na arte</h3><p>Proporção áurea, simetria, geometria, perspectiva – artistas usam matemática para criar obras equilibradas e belas. Da arquitetura renascentista ao design moderno, a matemática orienta composições.</p></div>
+          <div class="highlight-box"><h3>📖 Literatura e Matemática</h3><p>Há uma forte intersecção entre literatura e matemática. Obras como "O Homem que Calculava" (Malba Tahan) trazem problemas matemáticos envoltos em narrativas. Autores como Lewis Carroll (matemático de Oxford) escreveram "Alice no País das Maravilhas" com jogos lógicos e paradoxos. A poesia também se aproxima da matemática por meio de métrica, padrões e estruturas rítmicas.</p></div>
+          <div class="highlight-box"><h3>🏛️ Matemática na Arquitetura</h3><p>A arquitetura é construída sobre princípios matemáticos: geometria euclidiana, simetria, proporção áurea, módulos, escalas e estruturas de suporte. Grandes obras como o Partenon, a Catedral de Notre-Dame, o Coliseu e os arcos góticos empregam razões matemáticas precisas. Na arquitetura contemporânea, a modelagem paramétrica e a geometria fractal ampliam as possibilidades de formas.</p></div>
+        </div>
+        <div class="curiosity-carousel">
+          <button class="carousel-btn" id="prevCuriosityBtn"><i class="fas fa-chevron-left"></i></button>
+          <div class="carousel-content" id="carouselText">✨ Clique nos botões para navegar pelas curiosidades matemáticas! ✨</div>
+          <button class="carousel-btn" id="nextCuriosityBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aba Matemática na Administração (completa) -->
+    <div id="tab-adm" class="tab-content">
+      <div class="card-panel">
+        <h2>📊 A Matemática como alicerce estratégico na Administração</h2>
+        <p>No mundo dos negócios, a Matemática não é apenas um suporte — é o próprio motor da tomada de decisão. Desde pequenas empresas até grandes corporações, os conceitos matemáticos permitem planejar, controlar, analisar e prever com precisão. A seguir, detalhamos as principais aplicações:</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; margin: 30px 0;">
+          <div class="highlight-box"><h3><i class="fas fa-chart-line"></i> Planejamento financeiro e controle de custos</h3><p>Orçamentos empresariais, análise de custos fixos e variáveis, cálculo do ponto de equilíbrio, margem de contribuição, projeções de fluxo de caixa — tudo isso exige domínio de matemática básica e financeira. Um administrador que sabe calcular o retorno sobre investimento (ROI) ou a taxa interna de retorno (TIR) consegue avaliar a viabilidade de projetos com muito mais segurança. Além disso, o uso de planilhas eletrônicas e softwares de gestão financeira potencializa essas análises, permitindo simulações de cenários e tomada de decisão baseada em dados.</p></div>
+          <div class="highlight-box"><h3><i class="fas fa-chart-bar"></i> Análise de dados e indicadores de desempenho</h3><p>Em um mercado orientado por dados, a estatística descritiva, a probabilidade e a modelagem matemática são fundamentais. KPIs (Key Performance Indicators), gráficos de controle, previsões de demanda, segmentação de mercado e análise de riscos são aplicações diretas da matemática. Ferramentas de Business Intelligence (BI) transformam dados brutos em informações valiosas, permitindo que gestores identifiquem tendências, otimizem processos e antecipem oportunidades.</p></div>
+          <div class="highlight-box"><h3><i class="fas fa-percent"></i> Matemática financeira aplicada</h3><p>Juros simples e compostos, amortizações, valor presente líquido (VPL), taxa efetiva e nominal, fluxo de caixa descontado — esses conceitos são a espinha dorsal da gestão financeira. Dominá-los permite avaliar investimentos, calcular o custo de capital, estruturar financiamentos e tomar decisões estratégicas de alocação de recursos. No contexto da administração pública e privada, a matemática financeira é indispensável para a sustentabilidade e o crescimento organizacional.</p></div>
+          <div class="highlight-box"><h3><i class="fas fa-chart-pie"></i> Otimização e pesquisa operacional</h3><p>Problemas de logística, roteirização, dimensionamento de equipes, gestão de estoques e programação de produção são resolvidos com métodos matemáticos como programação linear, teoria das filas e simulação. Essas técnicas ajudam a reduzir custos, aumentar a eficiência operacional e melhorar a alocação de recursos escassos. Um administrador que domina esses conceitos consegue transformar restrições em vantagens competitivas.</p></div>
+        </div>
+        <p>Neste projeto, integramos esses conhecimentos à prática, permitindo que os futuros administradores vivenciem situações reais de gestão usando tecnologias digitais, alinhando teoria e prática de forma significativa. A matemática, longe de ser um obstáculo, torna-se uma aliada indispensável para a inovação e a sustentabilidade dos negócios.</p>
+      </div>
+    </div>
+
+    <!-- Aba Metodologias Ativas (completa) -->
+    <div id="tab-metodologias" class="tab-content">
+      <div class="card-panel">
+        <h2>🚀 Metodologias Ativas: o estudante como protagonista da aprendizagem</h2>
+        <p>As metodologias ativas rompem com o modelo tradicional de ensino, onde o aluno é um mero receptor de informações. Aqui, o estudante assume papel central, construindo conhecimento de forma autônoma, colaborativa e significativa. Aplicadas ao ensino de Matemática, essas abordagens tornam os conceitos mais concretos, desafiadores e prazerosos. Conheça as principais metodologias que utilizamos:</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px; margin: 30px 0;">
+          <div class="highlight-box"><h3><i class="fas fa-puzzle-piece"></i> Resolução e proposição de problemas</h3><p>Inspirada em Patrício Felmer (Universidade do Chile) e Marcelo Proença (Brasil), essa metodologia coloca o aluno diante de situações desafiadoras. Mais que encontrar respostas, o estudante aprende a formular perguntas relevantes, investigar diferentes caminhos, validar hipóteses e criar seus próprios problemas. Desenvolve a criatividade matemática, a argumentação e a persistência. É uma abordagem que valoriza o erro como parte do processo de aprendizagem e promove a autonomia.</p></div>
+          <div class="highlight-box"><h3><i class="fas fa-gamepad"></i> Gamificação</h3><p>Elementos de jogos — como pontuação, níveis, recompensas, desafios e narrativas — são aplicados ao contexto educacional. Plataformas como Khan Academy, Kahoot, GeoGebra e escape rooms matemáticos transformam o aprendizado em uma experiência lúdica e motivadora. A gamificação aumenta o engajamento, reduz a ansiedade e estimula a competição saudável, além de permitir um feedback imediato e personalizado.</p></div>
+          <div class="highlight-box"><h3><i class="fas fa-flask"></i> Aprendizagem Baseada em Projetos (ABP)</h3><p>Os estudantes investigam problemas reais (sustentabilidade, saúde, economia local, design de produtos) e aplicam conceitos matemáticos para criar soluções concretas. O projeto culmina em uma apresentação, desenvolvendo também habilidades de comunicação, trabalho em equipe e autogestão. É uma oportunidade de conectar a matemática com a vida fora da escola, tornando o aprendizado mais significativo e duradouro.</p></div>
+          <div class="highlight-box"><h3><i class="fas fa-chalkboard-user"></i> Sala de Aula Invertida</h3><p>Conceitos são estudados em casa (vídeos, textos, simuladores) e o tempo de aula é dedicado à prática, discussão e aprofundamento, com o professor como mediador. Isso permite ritmos personalizados, aumenta a participação e potencializa a interação entre os alunos. Na matemática, é ideal para resolver exercícios em grupo e esclarecer dúvidas de forma colaborativa, além de liberar tempo para atividades mais complexas.</p></div>
+          <div class="highlight-box"><h3><i class="fas fa-people-arrows"></i> Aprendizagem Colaborativa</h3><p>Estratégias como <em>Turn and Talk</em>, grupos de investigação, ensino por pares e mesa redonda promovem a troca de ideias, a argumentação e a construção coletiva do conhecimento. Na matemática, essa abordagem ajuda a desconstruir o mito de que se aprende sozinho, valorizando diferentes estratégias de resolução. Além disso, fortalece habilidades socioemocionais como respeito, escuta ativa e empatia.</p></div>
+          <div class="highlight-box"><h3><i class="fas fa-microchip"></i> Tecnologias Digitais</h3><p>Softwares de geometria dinâmica (GeoGebra), planilhas eletrônicas, simuladores, realidade aumentada e até programação básica (Python) são usados para explorar conceitos abstratos de forma visual e interativa. A tecnologia amplia as possibilidades de experimentação, modelagem e análise de dados, tornando a matemática mais acessível e conectada ao mundo contemporâneo. Ferramentas como o próprio site que desenvolvemos também são exemplos de como a tecnologia pode ser aliada da educação.</p></div>
+        </div>
+        <div class="highlight-box" style="background: rgba(103,232,249,0.1); margin-top: 20px;">
+          <i class="fas fa-lightbulb"></i> <strong>Integração com Lemov:</strong> As técnicas de Doug Lemov potencializam essas metodologias, garantindo participação equitativa, feedback imediato e consolidação da aprendizagem. Por exemplo, o <em>Cold Call</em> mantém todos engajados durante a discussão de problemas, e o <em>Exit Ticket</em> ao final da aula permite verificar o entendimento coletivo.
+        </div>
+      </div>
+    </div>
+
+    <!-- Aba Técnicas Lemov (completa) -->
+    <div id="tab-lemov" class="tab-content">
+      <div class="card-panel">
+        <h2>🎯 Técnicas de Doug Lemov: ferramentas para uma gestão de aula eficaz e inclusiva</h2>
+        <p>Doug Lemov, autor de <em>“Aula Nota 10”</em>, sistematizou práticas de professores excepcionais, criando um conjunto de técnicas que aumentam o engajamento, a participação e a aprendizagem. Essas estratégias são especialmente úteis no ensino de matemática, onde a atenção e o raciocínio contínuo são fundamentais. Conheça as principais:</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px; margin: 30px 0;">
+          <div class="highlight-box"><h3>🚫 No Opt Out</h3><p>Garante que nenhum aluno saia da questão sem resposta correta. Quando um estudante erra ou não sabe, o professor oferece suporte (pista, revisão) e, ao final, o aluno responde corretamente. Evita a sensação de fracasso e consolida o aprendizado, mostrando que errar é parte do processo. É uma técnica que promove a equidade e a persistência.</p></div>
+          <div class="highlight-box"><h3>📞 Cold Call</h3><p>O professor chama estudantes aleatoriamente, sem voluntários. Mantém todos atentos e preparados, distribui a participação e evita que apenas alguns respondam. Em matemática, é eficaz para verificar compreensão de conceitos de forma equitativa e para quebrar a previsibilidade, aumentando o foco coletivo.</p></div>
+          <div class="highlight-box"><h3>✅ Check for Understanding</h3><p>Verificação contínua da compreensão em tempo real, usando mini-quadros, gestos, perguntas rápidas ou respostas escritas. Permite ao professor ajustar a instrução imediatamente, antes que os erros se consolidem. Essencial para identificar lacunas e evitar que alunos fiquem para trás. Pode ser feito com tecnologias ou simplesmente com um “polegar para cima/baixo”.</p></div>
+          <div class="highlight-box"><h3>💬 Turn and Talk</h3><p>Os alunos discutem em duplas por alguns minutos. Aumenta a participação, desenvolve a argumentação e permite que todos processem a informação antes de responder publicamente. Ideal para explorar estratégias de resolução de problemas e compartilhar ideias. Na matemática, é excelente para que os alunos verbalizem seu raciocínio e aprendam uns com os outros.</p></div>
+          <div class="highlight-box"><h3>📈 Stretch It</h3><p>Após uma resposta correta, o professor aprofunda com perguntas desafiadoras: “Por quê?”, “E se mudássemos os números?”, “Como você faria diferente?”. Expande o raciocínio, a transferência de conhecimento e a capacidade de generalização. É uma forma de valorizar o acerto e levar o aluno além do mínimo esperado.</p></div>
+          <div class="highlight-box"><h3>🎫 Exit Ticket</h3><p>Uma pequena atividade ao final da aula (uma questão, um resumo) que revela o que foi aprendido e orienta o planejamento da próxima aula. Essencial para a avaliação formativa e para ajustar a prática docente. Pode ser usada para identificar conceitos que precisam ser retomados ou para que os alunos autoavaliem seu aprendizado.</p></div>
+        </div>
+        <p>Essas técnicas, quando aplicadas de forma consistente, transformam a dinâmica da sala de aula, promovendo maior participação, redução de desigualdades e consolidação do aprendizado. No contexto deste projeto, integramos as técnicas de Lemov às metodologias ativas e ao jogo Snake, criando um ambiente de aprendizagem onde cada acerto é celebrado e cada erro vira oportunidade de crescimento.</p>
+      </div>
+    </div>
+
+    <!-- Aba Quiz (6 questões com feedback Lemov) -->
+    <div id="tab-quiz" class="tab-content">
+      <div class="card-panel">
+        <h2>🎮 Quiz: Matemática, Metodologias e Técnicas de Lemov</h2>
+        <p>Responda às questões abaixo. Ao selecionar uma opção, você verá um feedback imediato baseado nas técnicas de Doug Lemov. No final, confira sua pontuação e orientações pedagógicas completas.</p>
+        <div class="quiz-card" id="quizContainer"></div>
+        <div class="btn-group">
+          <button id="submitQuiz" class="btn-primary">Verificar resultado final</button>
+          <button id="resetQuiz" class="btn-secondary">Reiniciar quiz</button>
+        </div>
+        <div id="quizFeedbackArea" class="feedback-area"></div>
+      </div>
+    </div>
+
+    <!-- Aba Jogo Snake -->
+    <div id="tab-snake" class="tab-content">
+      <div class="card-panel">
+        <h2>🐍 Jogo Snake: Matemática em Movimento</h2>
+        <div class="game-container">
+          <canvas id="snakeCanvas" width="400" height="400" class="game-canvas"></canvas>
+          <div class="game-info">
+            <p><i class="fas fa-apple-alt"></i> Pontuação: <span id="scoreDisplay" class="score">0</span></p>
+            <p><i class="fas fa-chart-line"></i> Fase: <span id="phaseDisplay" class="phase">1</span></p>
+            <p><i class="fas fa-tachometer-alt"></i> Velocidade: <span id="speedDisplay">150</span> ms</p>
+            <div class="game-buttons">
+              <button id="startGameBtn" class="game-btn">▶ Iniciar</button>
+              <button id="pauseGameBtn" class="game-btn">⏸ Pausar</button>
+              <button id="restartGameBtn" class="game-btn">🔄 Reiniciar</button>
+            </div>
+            <p style="font-size:0.8rem; margin-top:12px;"><i class="fas fa-keyboard"></i> Controles: W ↑ / A ← / S ↓ / D →</p>
+          </div>
+        </div>
+        <div class="math-explanation">
+          <h3><i class="fas fa-dice-d6"></i> A Matemática está em todos os jogos – e aprender com eles é divertido!</h3>
+          <p>Os videogames, os jogos de tabuleiro e até os jogos de cartas são construídos sobre conceitos matemáticos. Jogar não é apenas entretenimento: é uma forma poderosa de desenvolver o raciocínio lógico, a estratégia e a resolução de problemas. No jogo Snake, por exemplo, você encontra:</p>
+          <ul>
+            <li><strong>Plano Cartesiano:</strong> O tabuleiro é uma grade de coordenadas (x, y). Cada posição da cobra e da fruta é um par ordenado.</li>
+            <li><strong>Vetores de direção:</strong> O movimento da cobra é controlado por vetores (0, -20), (0, 20), (-20, 0) ou (20, 0). A cada passo, somamos o vetor à posição atual.</li>
+            <li><strong>Colisão e detecção:</strong> A lógica de colisão (com paredes ou com o próprio corpo) usa comparação de coordenadas – uma verificação de igualdade entre pares ordenados.</li>
+            <li><strong>Crescimento e sequências:</strong> Quando a cobra come a fruta, seu comprimento aumenta em uma unidade, gerando uma sequência de pontos que se estende.</li>
+            <li><strong>Fases e progressão:</strong> A cada 3 frutas, a velocidade aumenta, introduzindo o conceito de <strong>taxa de variação</strong> e limites de reação.</li>
+            <li><strong>Aleatoriedade e probabilidade:</strong> A fruta aparece em posições aleatórias, respeitando espaços livres – um exemplo de sorteio com restrições.</li>
+          </ul>
+          <div class="fun-fact">
+            <i class="fas fa-smile-wink"></i> <strong>Sabia que?</strong> Muitos jogos modernos usam álgebra linear, geometria computacional e até inteligência artificial. Aprender matemática jogando torna o raciocínio mais intuitivo e a experiência muito mais prazerosa!
+          </div>
+          <p style="margin-top: 16px;">Jogar Snake é uma maneira divertida de exercitar o raciocínio espacial, antecipação de trajetórias e estratégia, tudo baseado em matemática. Que tal testar suas habilidades?</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aba Créditos -->
+    <div id="tab-creditos" class="tab-content">
+      <div class="card-panel" style="text-align: center;">
+        <h2>🙏 Agradecimentos</h2>
+        <p><strong>Núcleo Regional de Educação de Paranavaí</strong> – apoio fundamental à inovação pedagógica.</p>
+        <p><strong>Colégio Estadual Antônio Tortato (Paranacity/PR)</strong> e <strong>Colégio Estadual São Vicente de Paula (Nova Esperança/PR)</strong> – pela parceria e compromisso com a educação pública.</p>
+        <p><strong>Professora Patrícia Ferro</strong> – orientadora dedicada, que nos guiou com paciência, conhecimento e entusiasmo.</p>
+        <hr style="margin: 24px 0; border-color: rgba(255,255,255,0.1);">
+        <h3>👩‍🏫 Equipe do Projeto</h3>
+        <p><strong>Alunos(as):</strong> Paula, Pietra, Júlia, Marcos, Fábio e Emanuela</p>
+        <p><strong>Orientação:</strong> Professora Patrícia Ferro | Coordenadora de Estágio do Formação Docente</p>
+        <p><i class="fas fa-chalkboard-user"></i> Projeto integrado: Formação de Docentes e Administração</p>
+        <p>Este site foi desenvolvido inteiramente por nós, como parte do nosso aprendizado e como contribuição para a comunidade escolar.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>Matemática em Ação: ideias que inspiram, aprendizagens que transformam</p>
+    <p>Alunos: Paula, Pietra, Júlia, Marcos, Fábio, Emanuela | Orientação: Profª Patrícia Ferro</p>
+    <div class="footer-quote">💫 "Seja a mudança que você quer ver no mundo." – Mahatma Gandhi</div>
+  </div>
+</footer>
+
+<div class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<!-- Player de música -->
+<div class="music-player" id="musicPlayer">
+  <i class="fas fa-music"></i>
+  <span>Música ambiente</span>
+</div>
+<audio id="bgMusic" loop preload="auto">
+  <!-- Substitua o src pela sua música. Use um arquivo de áudio livre de direitos. -->
+  <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d2f1e6f5c8.mp3?filename=relaxing-piano-142010.mp3" type="audio/mpeg">
+  Seu navegador não suporta áudio.
+</audio>
+
+<script>
+  // ---------- PUZZLE ----------
+  const puzzles = [
+    { q: "Se 2 + 2 = 4 e 3 × 3 = 9, qual é o resultado de 5 × 5 - 5?", a: "20" },
+    { q: "Qual é o próximo número da sequência: 2, 4, 8, 16, ?", a: "32" },
+    { q: "Quantos ângulos retos tem um quadrado?", a: "4" },
+    { q: "Qual é o valor de π (pi) arredondado para duas casas decimais?", a: "3,14" },
+    { q: "Se um número é divisível por 2 e por 3, ele é divisível por qual número?", a: "6" },
+    { q: "Qual é a raiz quadrada de 144?", a: "12" },
+    { q: "Quanto é 15% de 200?", a: "30" }
+  ];
+  let currentPuzzle = null;
+  function loadRandomPuzzle() {
+    const randomIndex = Math.floor(Math.random() * puzzles.length);
+    currentPuzzle = puzzles[randomIndex];
+    document.getElementById('puzzleQuestion').innerText = currentPuzzle.q;
+    document.getElementById('puzzleAnswer').innerText = `Resposta: ${currentPuzzle.a}`;
+    document.getElementById('puzzleAnswer').style.display = 'none';
+  }
+  document.getElementById('revealAnswerBtn').addEventListener('click', () => {
+    document.getElementById('puzzleAnswer').style.display = 'block';
+  });
+  document.getElementById('newPuzzleBtn').addEventListener('click', loadRandomPuzzle);
+  loadRandomPuzzle();
+
+  // ---------- CURIOSIDADES CARROSSEL ----------
+  const curiosities = [
+    "📐 A palavra 'álgebra' vem do árabe 'al-jabr', que significa 'reunião de partes quebradas'.",
+    "🧮 O número zero (0) só chegou ao Ocidente por volta do século XII.",
+    "🔢 O número π (pi) já foi calculado com mais de 31 trilhões de dígitos.",
+    "🌻 A sequência de Fibonacci aparece em flores, galhos de árvores e até em conchas.",
+    "🏆 A Medalha Fields é considerada o 'Nobel da Matemática' e é concedida a cada 4 anos.",
+    "🎵 A música 'Für Elise' de Beethoven tem estrutura matemática na sua forma.",
+    "🏛️ O Partenon na Grécia foi construído usando a proporção áurea."
+  ];
+  let currCuriosity = 0;
+  const carouselText = document.getElementById('carouselText');
+  function updateCuriosity() {
+    carouselText.style.opacity = '0';
+    setTimeout(() => {
+      carouselText.innerText = `✨ ${curiosities[currCuriosity]} ✨`;
+      carouselText.style.opacity = '1';
+    }, 200);
+  }
+  document.getElementById('prevCuriosityBtn').addEventListener('click', () => {
+    currCuriosity = (currCuriosity - 1 + curiosities.length) % curiosities.length;
+    updateCuriosity();
+  });
+  document.getElementById('nextCuriosityBtn').addEventListener('click', () => {
+    currCuriosity = (currCuriosity + 1) % curiosities.length;
+    updateCuriosity();
+  });
+  updateCuriosity();
+
+  // ---------- QUIZ (6 questões com feedback Lemov) ----------
+  const quizQuestions = [
+    { text: "A técnica de Doug Lemov que garante que o aluno não saia da questão sem responder corretamente, recebendo suporte até acertar, é chamada de:", options: ["Cold Call", "No Opt Out", "Turn and Talk", "Stretch It"], correct: 1, explanation: "No Opt Out – essencial para consolidar aprendizagem sem deixar ninguém para trás." },
+    { text: "Qual metodologia ativa coloca o estudante como criador de seus próprios desafios matemáticos, estimulando a formulação de perguntas e a investigação?", options: ["Gamificação", "Aprendizagem Baseada em Projetos", "Resolução e proposição de problemas", "Sala de Aula Invertida"], correct: 2, explanation: "Resolução e proposição de problemas – inspirada em Marcelo Proença." },
+    { text: "Na administração, o conceito de valor presente líquido (VPL) é utilizado para:", options: ["Calcular o lucro bruto de um produto", "Determinar a viabilidade de um investimento descontando os fluxos de caixa futuros", "Medir a satisfação dos clientes", "Controlar o estoque mínimo"], correct: 1, explanation: "VPL – ferramenta fundamental para decisões financeiras." },
+    { text: "A técnica 'Cold Call' de Doug Lemov consiste em:", options: ["Chamar os alunos voluntariamente", "Chamar alunos aleatoriamente, sem voluntários, mantendo todos atentos", "Permitir que os alunos escolham quem vai responder", "Dar tempo extra para pensar antes de responder"], correct: 1, explanation: "Cold Call mantém todos engajados e distribui a participação." },
+    { text: "Na arquitetura, a aplicação da razão áurea (aproximadamente 1,618) é conhecida por:", options: ["Criar estruturas de aço mais leves", "Estabelecer proporções consideradas esteticamente harmoniosas", "Calcular a resistência dos materiais", "Determinar a altura ideal de janelas"], correct: 1, explanation: "Razão áurea – usada para composições equilibradas e belas." },
+    { text: "Qual técnica de Lemov é mais indicada para verificar se os alunos compreenderam um conceito durante a aula, permitindo ajustes imediatos?", options: ["Exit Ticket", "Check for Understanding", "No Opt Out", "Stretch It"], correct: 1, explanation: "Check for Understanding – verificação contínua em tempo real." }
+  ];
+
+  let quizSelections = Array(quizQuestions.length).fill(null);
+  function buildQuiz() {
+    let html = '';
+    quizQuestions.forEach((q, idx) => {
+      html += `<div class="question" data-qidx="${idx}"><p><strong>${idx+1}. ${q.text}</strong></p>`;
+      q.options.forEach((opt, optIdx) => {
+        const checkedAttr = (quizSelections[idx] === optIdx) ? 'checked' : '';
+        html += `<label class="option" data-qidx="${idx}" data-optidx="${optIdx}"><input type="radio" name="q${idx}" value="${optIdx}" ${checkedAttr}> ${opt}</label>`;
+      });
+      html += `<div class="question-feedback" id="fb${idx}" style="margin-top: 8px; font-size:0.9rem;"></div></div>`;
+    });
+    document.getElementById('quizContainer').innerHTML = html;
+    document.querySelectorAll('.option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const qidx = parseInt(opt.dataset.qidx);
+        const selectedIdx = parseInt(opt.dataset.optidx);
+        const isCorrect = (selectedIdx === quizQuestions[qidx].correct);
+        const feedbackDiv = document.getElementById(`fb${qidx}`);
+        const parentDiv = opt.closest('.question');
+        quizSelections[qidx] = selectedIdx;
+        parentDiv.querySelectorAll('.option').forEach(el => el.classList.remove('correct-feedback', 'wrong-feedback'));
+        if (isCorrect) {
+          opt.classList.add('correct-feedback');
+          feedbackDiv.innerHTML = `<span style="color: #48bb78;">✅ Correto! ${quizQuestions[qidx].explanation}</span>`;
+        } else {
+          opt.classList.add('wrong-feedback');
+          const correctOpt = parentDiv.querySelector(`.option[data-optidx="${quizQuestions[qidx].correct}"]`);
+          if (correctOpt) correctOpt.classList.add('correct-feedback');
+          feedbackDiv.innerHTML = `<span style="color: #f56565;">❌ Errado! ${quizQuestions[qidx].explanation}</span>`;
+        }
+        opt.querySelector('input[type="radio"]').checked = true;
+      });
+    });
+  }
+  function showFinalFeedback() {
+    const allAnswered = quizSelections.every(sel => sel !== null);
+    const feedbackDiv = document.getElementById('quizFeedbackArea');
+    if (!allAnswered) {
+      feedbackDiv.style.display = 'block';
+      feedbackDiv.innerHTML = `<strong>⚠️ Você ainda não respondeu todas as questões.</strong><br>Complete o quiz para receber seu resultado e orientações finais baseadas nas técnicas de Lemov.`;
+      return;
+    }
+    const score = quizSelections.reduce((acc, sel, i) => acc + (sel === quizQuestions[i].correct ? 1 : 0), 0);
+    let message = `<strong>📊 Você acertou ${score} de ${quizQuestions.length} questões.</strong><br><br>`;
+    message += `<strong>🎯 Orientações pedagógicas com base nas técnicas de Lemov:</strong><br>`;
+    message += `✅ <strong>Quando o aluno acerta:</strong> aplique <strong>Stretch It</strong> – faça perguntas que aprofundem o raciocínio, como “Por quê?”, “E se mudássemos os dados?”, “Como você faria diferente?”.<br>`;
+    message += `❌ <strong>Quando o aluno erra:</strong> utilize <strong>No Opt Out</strong>: ofereça uma dica, peça que reflita e, ao final, garanta que ele responda corretamente. Nunca encerre a participação com o erro.<br>`;
+    message += `🔄 <strong>Durante o quiz ou atividade:</strong> use <strong>Cold Call</strong> para envolver toda a turma e <strong>Turn and Talk</strong> para que discutam em duplas antes de responder.<br>`;
+    message += `📌 <strong>Após a atividade:</strong> aplique <strong>Exit Ticket</strong> com uma questão-resumo para consolidar a aprendizagem e planejar a próxima aula.<br>`;
+    if (score === quizQuestions.length) message += `<br><br>🏆 Excelente! Continue desafiando com <strong>Stretch It</strong>.`;
+    else if (score >= 3) message += `<br><br>👍 Bom desempenho! Reforce com atividades colaborativas e <strong>Check for Understanding</strong>.`;
+    else message += `<br><br>📚 É importante retomar os conceitos. Use <strong>No Opt Out</strong> e <strong>Exit Ticket</strong> para monitorar o progresso.`;
+    feedbackDiv.style.display = 'block';
+    feedbackDiv.innerHTML = message;
+  }
+  function resetQuiz() {
+    quizSelections.fill(null);
+    buildQuiz();
+    document.getElementById('quizFeedbackArea').style.display = 'none';
+  }
+  buildQuiz();
+  document.getElementById('submitQuiz').addEventListener('click', showFinalFeedback);
+  document.getElementById('resetQuiz').addEventListener('click', resetQuiz);
+
+  // ---------- SNAKE GAME ----------
+  const canvas = document.getElementById('snakeCanvas');
+  const ctx = canvas.getContext('2d');
+  const scoreSpan = document.getElementById('scoreDisplay');
+  const phaseSpan = document.getElementById('phaseDisplay');
+  const speedSpan = document.getElementById('speedDisplay');
+
+  let snake = [{x: 200, y: 200}];
+  let direction = {x: 20, y: 0};
+  let food = {x: 100, y: 100};
+  let score = 0;
+  let phase = 1;
+  let gameLoop = null;
+  let isGameRunning = false;
+  let isPaused = false;
+  let gameInterval = 150;
+
+  function randomFood() {
+    let newX, newY;
+    do {
+      newX = Math.floor(Math.random() * 20) * 20;
+      newY = Math.floor(Math.random() * 20) * 20;
+    } while (snake.some(segment => segment.x === newX && segment.y === newY));
+    food = {x: newX, y: newY};
+  }
+
+  function updatePhase() {
+    if (score >= 9) phase = 3;
+    else if (score >= 3) phase = 2;
+    else phase = 1;
+    phaseSpan.innerText = phase;
+    let newSpeed = phase === 1 ? 150 : phase === 2 ? 120 : 90;
+    if (newSpeed !== gameInterval && isGameRunning && !isPaused) {
+      gameInterval = newSpeed;
+      speedSpan.innerText = gameInterval;
+      clearInterval(gameLoop);
+      gameLoop = setInterval(gameStep, gameInterval);
+    }
+  }
+
+  function gameStep() {
+    if (!isGameRunning || isPaused) return;
+    let newHead = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
+    if (newHead.x < 0 || newHead.x >= 400 || newHead.y < 0 || newHead.y >= 400 || snake.some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
+      gameOver();
+      return;
+    }
+    snake.unshift(newHead);
+    if (newHead.x === food.x && newHead.y === food.y) {
+      score++;
+      scoreSpan.innerText = score;
+      randomFood();
+      updatePhase();
+    } else {
+      snake.pop();
+    }
+    draw();
+  }
+
+  function draw() {
+    ctx.fillStyle = '#0a0f2a';
+    ctx.fillRect(0, 0, 400, 400);
+    ctx.strokeStyle = 'rgba(253,230,138,0.2)';
+    for (let i = 0; i <= 20; i++) {
+      ctx.beginPath();
+      ctx.moveTo(i*20, 0);
+      ctx.lineTo(i*20, 400);
+      ctx.stroke();
+      ctx.moveTo(0, i*20);
+      ctx.lineTo(400, i*20);
+      ctx.stroke();
+    }
+    snake.forEach((segment, idx) => {
+      ctx.fillStyle = idx === 0 ? '#fde68a' : '#f97316';
+      ctx.fillRect(segment.x, segment.y, 18, 18);
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(segment.x+6, segment.y+6, 6, 6);
+    });
+    ctx.fillStyle = '#67e8f9';
+    ctx.beginPath();
+    ctx.arc(food.x+10, food.y+10, 8, 0, 2*Math.PI);
+    ctx.fill();
+  }
+
+  function gameOver() {
+    if (gameLoop) clearInterval(gameLoop);
+    gameLoop = null;
+    isGameRunning = false;
+    isPaused = false;
+    ctx.fillStyle = 'rgba(0,0,0,0.7)';
+    ctx.fillRect(0, 0, 400, 400);
+    ctx.fillStyle = 'white';
+    ctx.font = '20px Inter';
+    ctx.fillText('Game Over!', 150, 180);
+    ctx.fillText(`Pontuação: ${score}`, 150, 220);
+    ctx.fillText('Clique em "Iniciar"', 140, 260);
+  }
+
+  function startGame() {
+    if (gameLoop) clearInterval(gameLoop);
+    snake = [{x: 200, y: 200}];
+    direction = {x: 20, y: 0};
+    score = 0;
+    phase = 1;
+    gameInterval = 150;
+    isGameRunning = true;
+    isPaused = false;
+    scoreSpan.innerText = score;
+    phaseSpan.innerText = phase;
+    speedSpan.innerText = gameInterval;
+    randomFood();
+    draw();
+    gameLoop = setInterval(gameStep, gameInterval);
+    document.getElementById('pauseGameBtn').innerText = '⏸ Pausar';
+  }
+
+  function pauseGame() {
+    if (!isGameRunning) return;
+    isPaused = !isPaused;
+    const pauseBtn = document.getElementById('pauseGameBtn');
+    pauseBtn.innerText = isPaused ? '▶ Continuar' : '⏸ Pausar';
+    if (!isPaused) {
+      if (gameLoop) clearInterval(gameLoop);
+      gameLoop = setInterval(gameStep, gameInterval);
+      draw();
+    } else {
+      ctx.fillStyle = 'rgba(0,0,0,0.5)';
+      ctx.fillRect(0, 0, 400, 400);
+      ctx.fillStyle = 'white';
+      ctx.font = '20px Inter';
+      ctx.fillText('Pausado', 170, 200);
+    }
+  }
+
+  function restartGame() {
+    startGame();
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (!isGameRunning || isPaused) return;
+    const key = e.key;
+    if (key === 'ArrowUp' && direction.y === 0) direction = {x: 0, y: -20};
+    else if (key === 'ArrowDown' && direction.y === 0) direction = {x: 0, y: 20};
+    else if (key === 'ArrowLeft' && direction.x === 0) direction = {x: -20, y: 0};
+    else if (key === 'ArrowRight' && direction.x === 0) direction = {x: 20, y: 0};
+    else if (key === 'w' || key === 'W') { e.preventDefault(); if (direction.y === 0) direction = {x: 0, y: -20}; }
+    else if (key === 's' || key === 'S') { e.preventDefault(); if (direction.y === 0) direction = {x: 0, y: 20}; }
+    else if (key === 'a' || key === 'A') { e.preventDefault(); if (direction.x === 0) direction = {x: -20, y: 0}; }
+    else if (key === 'd' || key === 'D') { e.preventDefault(); if (direction.x === 0) direction = {x: 20, y: 0}; }
+  });
+
+  document.getElementById('startGameBtn').addEventListener('click', startGame);
+  document.getElementById('pauseGameBtn').addEventListener('click', pauseGame);
+  document.getElementById('restartGameBtn').addEventListener('click', restartGame);
+  draw();
+
+  // ---------- MOUSE GRADIENT ----------
+  document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth) * 100;
+    const y = (e.clientY / window.innerHeight) * 100;
+    document.body.style.setProperty('--mouse-x', `${x}%`);
+    document.body.style.setProperty('--mouse-y', `${y}%`);
+  });
+
+  // ---------- SISTEMA DE ABAS ----------
+  const tabs = {
+    inicio: document.getElementById('tab-inicio'),
+    importancia: document.getElementById('tab-importancia'),
+    adm: document.getElementById('tab-adm'),
+    metodologias: document.getElementById('tab-metodologias'),
+    lemov: document.getElementById('tab-lemov'),
+    quiz: document.getElementById('tab-quiz'),
+    snake: document.getElementById('tab-snake'),
+    creditos: document.getElementById('tab-creditos')
+  };
+  function activateTab(tabId) {
+    Object.values(tabs).forEach(tab => tab?.classList.remove('active'));
+    if (tabs[tabId]) tabs[tabId].classList.add('active');
+    document.querySelector('.tabs-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.querySelectorAll('.nav a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const tabId = link.getAttribute('data-tab');
+      if (tabs[tabId]) activateTab(tabId);
+    });
+  });
+  activateTab('inicio');
+
+  // ---------- CONTROLE DE MÚSICA ----------
+  const audio = document.getElementById('bgMusic');
+  const musicBtn = document.getElementById('musicPlayer');
+  let isPlaying = false;
+
+  musicBtn.addEventListener('click', () => {
+    if (isPlaying) {
+      audio.pause();
+      musicBtn.querySelector('i').classList.remove('fa-music');
+      musicBtn.querySelector('i').classList.add('fa-pause');
+    } else {
+      // Tenta tocar (pode ser bloqueado pelo navegador até interação do usuário)
+      audio.play().catch(e => console.log("Autoplay bloqueado, mas o usuário clicou para tocar"));
+      musicBtn.querySelector('i').classList.remove('fa-pause');
+      musicBtn.querySelector('i').classList.add('fa-music');
+    }
+    isPlaying = !isPlaying;
+  });
+</script>
+</body>
+</html>
