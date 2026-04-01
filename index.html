@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+  <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
@@ -138,20 +139,31 @@
       text-align: center;
     }
 
-    .hero h1 {
-      font-size: clamp(2.5rem, 7vw, 4.5rem);
-      font-weight: 800;
-      background: linear-gradient(135deg, #ffffff, #fde68a, #f97316, #67e8f9);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      margin-bottom: 28px;
-      animation: float 5s ease-in-out infinite;
+    /* Capa flutuante com brilho */
+    .hero-image {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 30px;
+      animation: floatGlow 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 8px rgba(253,230,138,0.6));
+      transition: filter 0.3s;
     }
-
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    .hero-image:hover {
+      filter: drop-shadow(0 0 20px rgba(253,230,138,0.9));
+    }
+    @keyframes floatGlow {
+      0% {
+        transform: translateY(0px);
+        filter: drop-shadow(0 0 5px rgba(253,230,138,0.5));
+      }
+      50% {
+        transform: translateY(-12px);
+        filter: drop-shadow(0 0 20px rgba(253,230,138,0.9));
+      }
+      100% {
+        transform: translateY(0px);
+        filter: drop-shadow(0 0 5px rgba(253,230,138,0.5));
+      }
     }
 
     .hero p {
@@ -614,6 +626,7 @@
       .emblems-section { flex-direction: column; align-items: center; gap: 20px; }
       .music-player { bottom: 80px; left: 10px; padding: 6px 12px; }
       .music-player span { display: none; }
+      .hero-image { max-width: 90%; }
     }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -638,7 +651,9 @@
 
 <div class="hero">
   <div class="container">
-    <h1>Matemática em ação:<br>ideias que inspiram, aprendizagens que transformam</h1>
+    <!-- Imagem flutuante com brilho (substitui o título) -->
+    <img src="capa.png" alt="Capa Matemática em Ação" class="hero-image">
+
     <p>Projeto interdisciplinar entre o <strong>Colégio Estadual Antônio Tortato (Paranacity/PR)</strong> e o <strong>Colégio Estadual São Vicente de Paula (Nova Esperança/PR)</strong>, integrando o curso de Formação de Docentes e Administração.</p>
     <p>Um site interativo que une metodologias ativas, técnicas de Doug Lemov e matemática para uma aprendizagem significativa, participativa e inovadora.</p>
 
